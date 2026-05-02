@@ -35,9 +35,14 @@ jobs:
         env:
           MLFLOW_TRACKING_URI: file://${{ github.workspace }}/mlruns
         run: |
+          N_ESTIMATORS="${{ github.event.inputs.n_estimators }}"
+          if [ -z "$N_ESTIMATORS" ]; then N_ESTIMATORS="100"; fi
+          MAX_DEPTH="${{ github.event.inputs.max_depth }}"
+          if [ -z "$MAX_DEPTH" ]; then MAX_DEPTH="10"; fi
+          
           mlflow run MLProject/ \
-            -P n_estimators=${{ github.event.inputs.n_estimators || '100' }} \
-            -P max_depth=${{ github.event.inputs.max_depth || '10' }} \
+            -P n_estimators=$N_ESTIMATORS \
+            -P max_depth=$MAX_DEPTH \
             --env-manager=local
 
       - name: Upload MLflow Artifacts to GitHub

@@ -85,4 +85,4 @@ with mlflow.start_run(run_name="CI_Training"):
     plt.close()
     mlflow.log_artifact("confusion_matrix.png")
 
-    print(f"✅ Training selesai | Accuracy={acc:.4f} | F1={f1:.4f} | AUC={auc:.4f}")
+    print(f"Training selesai | Accuracy={acc:.4f} | F1={f1:.4f} | AUC={auc:.4f}")
