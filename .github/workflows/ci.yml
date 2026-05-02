@@ -53,8 +53,8 @@ jobs:
 
       - name: Build & Push Docker Image (mlflow build-docker)
         run: |
-          RUN_ID=$(ls mlruns/0/ | grep -v 'meta.yaml' | head -1)
-          MODEL_URI="mlruns/0/${RUN_ID}/artifacts/model"
+          MODEL_URI=$(find mlruns -type d -path "*/artifacts/model" | head -n 1)
+          echo "Found MODEL_URI: $MODEL_URI"
           mlflow models build-docker \
             --model-uri "${MODEL_URI}" \
             --name "kimakimman/wine-quality-ml"
