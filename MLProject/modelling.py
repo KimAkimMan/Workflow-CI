@@ -36,9 +36,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # ─── MLflow Tracking ────────────────────────────────────────
-mlflow.set_experiment("wine_quality_ci")
 
-with mlflow.start_run(run_name="CI_Training"):
+with mlflow.start_run():
 
     # Log params
     mlflow.log_param("n_estimators",     args.n_estimators)
