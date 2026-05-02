@@ -32,6 +32,8 @@ jobs:
           pip install mlflow==2.19.0 scikit-learn==1.4.2 pandas numpy matplotlib seaborn
 
       - name: Run MLflow Project
+        env:
+          MLFLOW_TRACKING_URI: file://${{ github.workspace }}/mlruns
         run: |
           mlflow run MLProject/ \
             -P n_estimators=${{ github.event.inputs.n_estimators || '100' }} \
