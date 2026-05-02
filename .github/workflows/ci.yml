@@ -58,11 +58,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build & Push Docker Image (mlflow build-docker)
+      - name: Build Docker Image
         run: |
           MODEL_URI=$(find mlruns -type d -path "*/artifacts/model" | head -n 1)
           echo "Found MODEL_URI: $MODEL_URI"
-          mlflow models build-docker \
-            --model-uri "${MODEL_URI}" \
-            --name "kimakimman/wine-quality-ml"
+          cp -r "$MODEL_URI" ./served_model
+          docker build -t kimakimman/wine-quality-ml:latest .
+
+      - name: Push Docker Image to Docker Hub
+        run: |
           docker push kimakimman/wine-quality-ml:latest
